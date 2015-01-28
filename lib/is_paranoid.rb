@@ -1,4 +1,4 @@
-require 'activerecord'
+require 'active_record'
 
 module IsParanoid
   # Call this in your model to enable all the safety-net goodness
@@ -231,7 +231,7 @@ module IsParanoid
 	                }                                       #     }
 	              )                                         #   )
 	            end                                         # end
-	
+
 						else
                                                           # Example:
 	            define_method name do |*args|               # def android_with_destroyed
