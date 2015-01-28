@@ -194,7 +194,7 @@ module IsParanoid
 
   module InstanceMethods
     def destroyed?
-      destroyed_field != nil
+      send(destroyed_field) != nil
     end
 
     def self.included(base)
@@ -275,7 +275,12 @@ module IsParanoid
     # Set deleted_at flag on a model to field_not_destroyed, effectively
     # undoing the soft-deletion.
     def restore(options = {})
+      if self.respond_to?(:before_restore)
+        return false if self.before_restore == false
+      end
       self.class.restore(id, options)
+      self.reload
+      self.after_restore if self.respond_to?(:after_restore)
       self
     end
 
